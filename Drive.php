@@ -42,11 +42,16 @@ class Drive
 
 	
 	public function Auth($code){
-		// Dado el código de autorización a un  token de acceso
-   		$this->client->authenticate($code);
-   		// Guardamos el codigo de acceso en la session
-  		$_SESSION['access_token'] = $this->client->getAccessToken();
-  		$this->client->setAccessToken($_SESSION['access_token']);
+		if (!isset($_SESSION['access_token'])) {
+ 			// Dado el código de autorización a un  token de acceso
+	   		$this->client->authenticate($code);
+	   		// Guardamos el codigo de acceso en la session
+	  		$_SESSION['access_token'] = $this->client->getAccessToken();
+		}
+			$this->client->setAccessToken($_SESSION['access_token']);
+		
+		
+  		
 	}
 
 
