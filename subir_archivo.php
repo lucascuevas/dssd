@@ -12,7 +12,7 @@ if (! isset($_GET['code'])) {
  else {
  	$drive->auth($_GET['code']); 	
 	$drive->create_google_service_api();
-	$drive->create_file('holamundp.pdf');
+	$drive->create_file('holamundp.pdf',"/home/mika/Documentos/EnunciadoTrabajodeCloud.pdf");
 	
 }
 

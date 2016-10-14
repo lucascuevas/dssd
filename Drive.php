@@ -36,7 +36,7 @@ class Drive
 
 	// Establecemos la pagina de redireccion luego de la autenticacion
 	public function set_redirect($arch){
-		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/conexionDrive/'.$arch);
+		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/dssd/'.$arch);
 		
 	}
 
@@ -69,7 +69,7 @@ class Drive
  		} 
  		else {
 	 		foreach ($files_list->getFiles() as $file) {
-	  			array_push($result,$file->getName() );
+	  			array_push($result,['name'=>$file->getName(),'id'=> $file->getId()]);
 	  	  		//echo("    ".$file->getName().",".$file->getId().'\n');
 	  		}
   		}
@@ -80,15 +80,47 @@ class Drive
 	}
 
 
-	public function create_file($title){
+	public function create_file($title,$path_file){
 		$file = new Google_Service_Drive_DriveFile();
 		$file->setName($title);
 		$file->setMimeType('application/pdf');
 			$result = $this->drive_service->files->create($file, array(
-				'data' =>file_get_contents("/home/mika/Documentos/EnunciadoTrabajodeCloud.pdf"),
+				'data' =>file_get_contents($path_file),
   				'mimeType' => 'application/pdf',
   				'uploadType' => 'media'
 		));
+
+	}
+
+	public function shared_file($fileId,$mail){
+		
+		$this->drive_service->getClient()->setUseBatch(true);
+		try {
+		  $batch = $this->drive_service->createBatch();
+
+		  $userPermission = new Google_Service_Drive_Permission(array(
+		    'type' => 'user',
+		    'role' => 'writer',
+		    'emailAddress' => $mail
+		  ));
+
+		   $request = $this->drive_service->permissions->create(
+		   $fileId, $userPermission, array('fields' => 'id'));
+		   $batch->add($request, 'user');
+
+ 		  $results = $batch->execute();
+
+		  foreach ($results as $result) {
+		    if ($result instanceof Google_Service_Exception) {
+		      // Handle error
+		      printf($result);
+		    } else {
+		      printf("Permission ID: %s\n", $result->id);
+		    }
+		  }
+		} finally {
+		  $this->drive_service->getClient()->setUseBatch(false);
+		}
 
 	}
 }
