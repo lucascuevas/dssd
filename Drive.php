@@ -38,7 +38,7 @@ class Drive
 
 	// Establecemos la pagina de redireccion luego de la autenticacion
 	public function set_redirect($arch){
-		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/dssd/'.$arch);
+		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/'.$arch);
 		
 	}
 
