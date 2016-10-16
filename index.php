@@ -1,26 +1,53 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Ejemplo Google drive api</title>
-</head>
-<body>
-<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
-<script type="text/javascript">
-    init = function() {
-        s = new gapi.drive.share.ShareClient();
-        s.setOAuthToken('<OAUTH_TOKEN>');
-        s.setItemIds(['0B4k2gJOcq6YSb09xUjdMYzdkOWM']);
-    }
-    window.onload = function() {
-        gapi.load('drive-share', init);
-    }
-</script>
+<?php 
+session_start();
+require_once 'Drive.php';
+
+$drive= new Drive();
+
+if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+  $drive->client()->setAccessToken($_SESSION['access_token']);
+  $drive->create_google_service_api();
+  $a=$drive->get_list_files();
+  require_once 'listado.php';
+
+}
+else {
+
+	$drive->set_redirect('index.php');
+
+	if (! isset($_GET['code'])) {
+		$drive->get_credentials($_GET['code']);
+	}
+	 else {
+	 	$drive->auth($_GET['code']);
+		$drive->create_google_service_api();
+		$a=$drive->get_list_files();
+		require_once 'listado.php';
+		#print_r($a);
+	}
+}
 
 
-	<h1>Google dive API</h1>
-	<a href="subir_archivo.php">Subir Archivo</a>
-	<a href="listar_archivos.php">Listar archivos</a>
-	<button onclick="s.showSettingsDialog()">Share</button>
 
-</body>
-</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+?>
+	

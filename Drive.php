@@ -1,5 +1,5 @@
 <?php 
- require_once 'vendor/src/Google/autoload.php';
+ require_once 'vendor/autoload.php';
 
 class Drive 
 {	
@@ -13,18 +13,20 @@ class Drive
 		$this->client->setIncludeGrantedScopes(true);
 		//solicitar acceso 
 		$this->client->addScope('https://www.googleapis.com/auth/drive');
-		$this->client->setAccessType('offline');
+		//$this->client->setAccessType('offline');
 		$this->client->setAuthConfigFile('client_secrets.json');		
 	}
 
 
-	
 	//Creamos un service object de la api que vamos a utilizar 
 	public function create_google_service_api ()
 	{
 		  $this->drive_service = new Google_Service_Drive($this->client);
 	}
 
+	public function client(){
+		return $this->client;
+	}
 	
 	// Autenticacion en OAuth 2.0 de googles
 	public function get_credentials(){
@@ -50,8 +52,6 @@ class Drive
 		}
 			$this->client->setAccessToken($_SESSION['access_token']);
 		
-		
-  		
 	}
 
 
@@ -59,9 +59,10 @@ class Drive
 	de google drive */
 	public function get_list_files(){
 		 $optParams = array(
-		  'pageSize' => 10,
-		  'fields' => 'nextPageToken, files(id, name)');
+			'fields' => 'nextPageToken, files(id, name)',
+			'q' => "'root' in parents");
 		$files_list=$this->drive_service->files->listFiles($optParams);
+		
 
 		$result= array();
 		if (count($files_list->getFiles()) == 0) {
@@ -70,28 +71,22 @@ class Drive
  		else {
 	 		foreach ($files_list->getFiles() as $file) {
 	  			array_push($result,['name'=>$file->getName(),'id'=> $file->getId()]);
-	  	  		//echo("    ".$file->getName().",".$file->getId().'\n');
 	  		}
   		}
   		return $result;
   		
-
-
 	}
 
 
-	public function create_file($title,$path_file){
+  
+
+	public function create_doc($title){
 		$file = new Google_Service_Drive_DriveFile();
 		$file->setName($title);
-		$file->setMimeType('application/pdf');
-			$result = $this->drive_service->files->create($file, array(
-				'data' =>file_get_contents($path_file),
-  				'mimeType' => 'application/pdf',
-  				'uploadType' => 'media'
-		));
+		$file->setMimeType('application/vnd.google-apps.document');
+		$result = $this->drive_service->files->create($file, array());
 
 	}
-
 	public function shared_file($fileId,$mail){
 		
 		$this->drive_service->getClient()->setUseBatch(true);
