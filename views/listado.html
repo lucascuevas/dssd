@@ -10,7 +10,7 @@
             <div class="demo-content card-panel col s12 m8 offset-m2">
               <div class="row">
                  <div class="col s12" >
-                <div class="col s10"><h3>Drive documents</h3> </div>
+                <div class="col s10"><h3>Drive</h3> </div>
                 <div class="col s2">
                    <a class="waves-effect waves-light btn indigo " id="create-btn" onclick="hideshow()">+</a>
                 </div>
@@ -55,7 +55,13 @@
 
                               
                              {{file.name}}</td>
-                             <td>{{file.type}}</td>
+                             <td>
+                               {% if file.shared == 1 %}
+                               <a class="waves-effect waves-light btn indigo " id="" ">Dejar de compartir</a>
+                               {% endif %}
+
+                             </td>
+                               }
                             
                       </tr>
                       {% endfor %}  

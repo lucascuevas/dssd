@@ -40,7 +40,7 @@ class Drive
 
 	// Establecemos la pagina de redireccion luego de la autenticacion
 	public function set_redirect($arch){
-		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/'.$arch);
+		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/dssd2016/'.$arch);
 
 	}
 
@@ -60,9 +60,11 @@ class Drive
 	/* Se realiza la peticion a la api: listamos los archivos
 	de google drive */
 	public function get_list_files(){
+		//'q' => "'root' in parents"
+		$sharedWithMe=$this->files_sharedWithMe();
+		
 		 $optParams = array(
 			'fields' => 'nextPageToken, files(id, name,mimeType)',
-			'q' => "'root' in parents",
 			'orderBy' => 'folder');
 		$files_list=$this->drive_service->files->listFiles($optParams);
 		
@@ -73,11 +75,16 @@ class Drive
  		else {
 
 	 		foreach ($files_list->getFiles() as $file) {
+	 			
+	 			$shared=in_array($file->getId(),$sharedWithMe);
+	 			
 	  			array_push($result,
 	  				['name'=>$file->getName(),
 	  				'id'=> $file->getId(),
-	  				'type' => $file->getMimeType()
+	  				'type' => $file->getMimeType(),
+	  				'shared' =>$shared
 	  				]);
+
 	  		}
   		}
   		return $result;
@@ -86,7 +93,7 @@ class Drive
 
 
   
-
+	/*Crea un google doc vacio */
 	public function create_doc($title){
 		$file = new Google_Service_Drive_DriveFile();
 		$file->setName($title);
@@ -94,8 +101,12 @@ class Drive
 		$result = $this->drive_service->files->create($file, array());
 
 	}
+
+	/* Otorga permisos de escritura al archivo con id -> fieldId
+	al usuarios con el mail proporcionado*/
 	public function shared_file($fileId,$mail){
-		
+
+
 		$this->drive_service->getClient()->setUseBatch(true);
 		try {
 		  $batch = $this->drive_service->createBatch();
@@ -123,6 +134,25 @@ class Drive
 		} finally {
 		  $this->drive_service->getClient()->setUseBatch(false);
 		}
+
+	}
+
+
+
+		/* Retorna en  un array los id de aquellos archivos 
+		que me compartieron a mi */
+		public function files_sharedWithMe(){
+
+		  $response = $this->drive_service->files->listFiles(array(
+		    'q' => "sharedWithMe ",
+		    'spaces' => 'drive',
+		    'fields' => 'nextPageToken, files(id, name)',
+		  ));
+		  $result=array();
+		  foreach ($response->files as $file) {
+		      array_push($result,$file->id) ;
+		  }
+		return $result;
 
 	}
 }
