@@ -31,14 +31,16 @@ class Drive
 	// Autenticacion en OAuth 2.0 de googles
 	public function get_credentials(){
 		 // 3) Generar una URL para solicitar el acceso desde el servidor de OAuth 2.0 de Google:
-  		$auth_url = $this->client->createAuthUrl();
-  		header('Location: ' . filter_var($auth_url, FILTER_SANITIZE_URL));
+		if ( !isset($_GET['code']) && !isset($_GET['error']) ) {
+  			$auth_url = $this->client->createAuthUrl();
+  			header('Location: ' . filter_var($auth_url, FILTER_SANITIZE_URL));
+  		}
 
 	}
 
 	// Establecemos la pagina de redireccion luego de la autenticacion
 	public function set_redirect($arch){
-		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/dssd/'.$arch);
+		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] .$arch);
 		
 	}
 
@@ -59,18 +61,23 @@ class Drive
 	de google drive */
 	public function get_list_files(){
 		 $optParams = array(
-			'fields' => 'nextPageToken, files(id, name)',
-			'q' => "'root' in parents");
+			'fields' => 'nextPageToken, files(id, name,mimeType)',
+			'q' => "'root' in parents",
+			'orderBy' => 'folder');
 		$files_list=$this->drive_service->files->listFiles($optParams);
 		
-
 		$result= array();
 		if (count($files_list->getFiles()) == 0) {
   		return array_push($result,"No files fount");
  		} 
  		else {
+
 	 		foreach ($files_list->getFiles() as $file) {
-	  			array_push($result,['name'=>$file->getName(),'id'=> $file->getId()]);
+	  			array_push($result,
+	  				['name'=>$file->getName(),
+	  				'id'=> $file->getId(),
+	  				'type' => $file->getMimeType()
+	  				]);
 	  		}
   		}
   		return $result;

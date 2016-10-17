@@ -1,0 +1,71 @@
+{% extends 'template.html' %}
+
+{% block contenedor %}
+    <div class="row">
+      <div class="demo-ribbon"></div>
+      <div class="demo-layout">        
+        <main class="demo-main">
+          <div class="demo-container">
+            <div class=""></div>
+            <div class="demo-content card-panel col s12 m8 offset-m2">
+              <div class="row">
+                 <div class="col s12" >
+                <div class="col s10"><h3>Drive documents</h3> </div>
+                <div class="col s2">
+                   <a class="waves-effect waves-light btn indigo " id="create-btn" onclick="hideshow()">+</a>
+                </div>
+              </div>
+              </div>
+              
+               <div class="row">
+                 <form  id="form1" style="display:none" class="col s12" method="GET" action="subir_archivo.php">
+                   <div class="row">
+                      <div class="input-field col s8">
+                        <input type="text" name="nombre" size="20" placeholder="Nombre del documento">
+                      </div>
+                      <div class="input-field col s2">
+                          <button class="btn waves-effect grey darken-2" type="submit" name="action">Enviar <i class="material-icons right ">send</i> </button>
+                      </div>
+                       <div class="input-field col s2">
+                          <button class="btn waves-effect grey darken-2" type="button" name="action" onclick="showBtn()" >Cancelar <i class="material-icons right">cancel</i> </button>
+                      </div>
+                    </div>
+                                      
+                  </form>
+                </div>
+
+
+               <table class="striped">
+                  <thead>
+                    <tr>
+                        <th></th>
+                        <th data-field="name">Name</th>
+                        <th data-field="id">id</th>
+                    </tr>
+                  </thead>
+                  <tbody>                   
+                      {% for file in files %}
+                       <tr>
+                              <td> {% if file.type == 'application/vnd.google-apps.folder' %}
+                                <i class="fa fa-folder fa-1x" aria-hidden="true"></i>
+                              {% else %}
+                                 <i class="fa fa-file-text fa-1x" aria-hidden="true"></i>
+                              {% endif %} </td>
+                             <td>                            
+
+                              
+                             {{file.name}}</td>
+                             <td>{{file.type}}</td>
+                            
+                      </tr>
+                      {% endfor %}  
+                  </tbody>
+                </table>
+                                     
+                     
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>  
+{% endblock  %}

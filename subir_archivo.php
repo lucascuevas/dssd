@@ -6,8 +6,8 @@ $drive= new Drive();
 if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
   $drive->client()->setAccessToken($_SESSION['access_token']);
   $drive->create_google_service_api();
-  $drive->create_doc($_GET['nombre']);
-  
+  $drive->create_doc($_GET['nombre']); 
+  header('Location: ' . filter_var('http://' . $_SERVER['HTTP_HOST']. '/', FILTER_SANITIZE_URL));
 
 }
 else {
@@ -24,7 +24,7 @@ if (! isset($_GET['code'])) {
  	$drive->auth($_GET['code']); 
 	$drive->create_google_service_api();	
 	$drive->create_doc($_SESSION['file_name']);
-	require_once 'listado.php';
+	header('Location: ' . filter_var('http://' . $_SERVER['HTTP_HOST']. '/', FILTER_SANITIZE_URL));
 	
 }
 }
