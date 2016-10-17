@@ -40,7 +40,7 @@ class Drive
 
 	// Establecemos la pagina de redireccion luego de la autenticacion
 	public function set_redirect($arch){
-		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/'.$arch);
+		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/dssd/'.$arch);
 
 	}
 
@@ -87,11 +87,14 @@ class Drive
 
   
 
-	public function create_doc($title){
+	public function create_doc($title,$mail){
 		$file = new Google_Service_Drive_DriveFile();
 		$file->setName($title);
 		$file->setMimeType('application/vnd.google-apps.document');
 		$result = $this->drive_service->files->create($file, array());
+		$this->create_google_service_api();
+		$this->shared_file($result['id'],$mail);
+		
 
 	}
 	public function shared_file($fileId,$mail){
