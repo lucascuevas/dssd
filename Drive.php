@@ -60,7 +60,7 @@ class Drive
 	/* Se realiza la peticion a la api: listamos los archivos
 	de google drive */
 	public function get_list_files(){
-		//'q' => "'root' in parents"
+		
 		$sharedWithMe=$this->files_sharedWithMe();
 		
 		 $optParams = array(
@@ -76,8 +76,7 @@ class Drive
 
 	 		foreach ($files_list->getFiles() as $file) {
 	 			
-	 			$shared=in_array($file->getId(),$sharedWithMe);
-	 			
+	 			$shared=in_array($file->getId(),$sharedWithMe);	 			
 	  			array_push($result,
 	  				['name'=>$file->getName(),
 	  				'id'=> $file->getId(),
@@ -154,7 +153,7 @@ class Drive
 		  ));
 		  $result=array();
 		  foreach ($response->files as $file) {
-		      array_push($result,$file->id) ;
+		     array_push($result,$file->getId());
 		  }
 		return $result;
 

@@ -23,7 +23,7 @@ else {
 	 	$drive->auth($_GET['code']);
 		$drive->create_google_service_api();
 		$files=$drive->get_list_files();
-		TwigController::render_view('listado.html',$files);;
+		TwigController::render_view('listado.html',$files);
 	}
 }
 
