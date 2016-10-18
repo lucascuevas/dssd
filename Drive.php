@@ -64,8 +64,7 @@ class Drive
 		$sharedWithMe=$this->files_sharedWithMe();
 		
 		 $optParams = array(
-			'fields' => 'nextPageToken, files(id, name,mimeType)',
-			'orderBy' => 'folder');
+			'fields' => 'nextPageToken, files(id, name,mimeType)');
 		$files_list=$this->drive_service->files->listFiles($optParams);
 		
 		$result= array();
