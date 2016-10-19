@@ -12,7 +12,7 @@
               <div class="row">
                  <div class="col s12" >
                 <div class="col s10"> 
-                     <img src="/images/drive.png" width="150px" height="150px">
+                     <img src="/dssd2016/images/drive.png" width="150px" height="150px">
                 </div>
                  <div class="col s2">                   
                     <a class="waves-effect waves-light btn modal-trigger  blue darken-1" href="#modal1">   
@@ -28,21 +28,20 @@
               </div>
 
 
-
-
             <div id="modal1" class="modal modal-fixed-footer">
                 <div class="modal-content">
                   <h4>Crear nuevo documento</h4>
                   <form  id="form1"  class="col s12" method="GET" action="subir_archivo.php">
                         <label for="nombre"> Nombre documento</label>
-                        <input type="text" name="nombre" size="20" placeholder="Nombre del documento" required>
+                        <input type="text" name="nombre" size="20" class="validate" placeholder="Nombre del documento" required>
                         <label for="mail"> Mail a compartir </label>
-                        <input type="text" name="mail" size="20" placeholder="Mail a compartir" required>
-                  
+                         <input id="email" type="email"  name="mail" class="validate" size="20" 
+                          placeholder="Mail a compartir" required>
+                        
                 </div>
                 <div class="modal-footer">
-                <button class=" waves-effect waves-green btn-flat " type="submit"> Agregar</button>
-                  <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">cancelar</a>
+                <button class=" waves-effect btn-flat " type="submit"> Agregar</button>
+                  <a href="#!" class="modal-action modal-close waves-effect btn-flat ">cancelar</a>
                   </form>
                 </div>
               </div>
@@ -80,8 +79,8 @@
                                 <i class="fa fa-share-alt-square" aria-hidden="true"></i>
                                {% endif %}                               
                              </td>   
-                             <td>
-                                <a class="btn waves-effect waves-teal  grey darken-2 "   onclick='Shared("{{file.id}}")'>Share</a>
+                             <td style="text-align:right">
+                                <a class="btn waves-effect waves-teal  grey darken-2 "   onclick='Shared("{{file.id}}")'>Compartir</a>
                              </td>                            
                               
                             

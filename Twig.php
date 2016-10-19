@@ -20,14 +20,18 @@ class TwigController {
 
     private function __construct() {
         
-    }
-    
+    }    
 
     public static function render_view($page,$datos){
             
         echo self::getTwig()->render($page,
             ['files' => $datos[0],
                     'token'=> $datos[1]]);
+    }
+    public static function render_index($page){
+
+        echo self::getTwig()->render($page,array());
+    
     }
     
 }
