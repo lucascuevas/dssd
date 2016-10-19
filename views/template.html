@@ -39,7 +39,7 @@
 <script type="text/javascript">
     init = function() {
         s = new gapi.drive.share.ShareClient();
-        s.setOAuthToken("<?php echo $_SESSION['access_token'] ?>");
+        s.setOAuthToken({{token}});
         s.setItemIds(['18kwj1_GN_Lip1GW7tu_6AXps45eNpIikiIS1uBDcM-8']);
     }
     window.onload = function() {
