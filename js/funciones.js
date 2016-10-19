@@ -14,3 +14,10 @@ function showBtn(){
     btn_create.style.display="inline-block";;
   }
 }
+ 
+
+function Shared(idFile){
+	
+	 s.setItemIds([idFile]);
+     s.showSettingsDialog();
+}

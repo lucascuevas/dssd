@@ -24,10 +24,10 @@ class TwigController {
     
 
     public static function render_view($page,$datos){
-        
-    
+            
         echo self::getTwig()->render($page,
-            array('files' => $datos));
+            ['files' => $datos[0],
+                    'token'=> $datos[1]]);
     }
     
 }

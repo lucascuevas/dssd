@@ -61,7 +61,7 @@
                                {% if file.shared == 1 %}
                                <a class="waves-effect waves-light btn indigo " id="" ">Dejar de compartir</a>
                                {% endif %}
-                               <button onclick="s.showSettingsDialog()">Share</button>
+                               <button onclick='Shared("{{file.id}}")'>Share</button>
 
 
                              </td>

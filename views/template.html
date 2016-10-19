@@ -33,19 +33,18 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
      <link rel="stylesheet" href="./css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/styles.css">
-    <script type="text/javascript" src="./js/funciones.js"></script>
+    
  
  <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
-<script type="text/javascript">
-    init = function() {
-        s = new gapi.drive.share.ShareClient();
-        s.setOAuthToken({{token}});
-        s.setItemIds(['18kwj1_GN_Lip1GW7tu_6AXps45eNpIikiIS1uBDcM-8']);
-    }
-    window.onload = function() {
-        gapi.load('drive-share', init);
-    }
-</script>
+ <script type="text/javascript" src="./js/funciones.js"></script>
+ <script type="text/javascript">
+   
+   init = function(){
+   s = new gapi.drive.share.ShareClient();
+        s.setOAuthToken("{{token}}");     
+   } 
+   gapi.load('drive-share',init);     
+ </script>
   </head>
   <body>
     

@@ -5,18 +5,17 @@ require_once 'Twig.php';
 
 $drive= new Drive();
 
- 
 if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
   $drive->client()->setAccessToken($_SESSION['access_token']);
   $drive->create_google_service_api();
-  $files=$drive->get_list_files();
-  $token=$_SESSION['access_token']['access_token'];
-  TwigController::render_view('listado.html',[$files,$token]);
+  $drive->delete('0B8ZKvt5NZ9-EcHJyMTdaa3dLWDdEQVFnRXNzaVJqbXB4bWdj');
+
+   
 
 }
 else {
 
-	$drive->set_redirect('index.php');
+	$drive->set_redirect('eliminar.php');
 
 	if ( !isset($_GET['code']) && !isset($_GET['error']) ) {
 		$drive->get_credentials($_GET['code']);
@@ -24,33 +23,10 @@ else {
 	 else {
 	 	$drive->auth($_GET['code']);
 		$drive->create_google_service_api();
-		$files=$drive->get_list_files();
-		$token=$_SESSION['access_token']['access_token'];
-		TwigController::render_view('listado.html',[$files,$token]);
+		  $drive->delete('0B8ZKvt5NZ9-EcHJyMTdaa3dLWDdEQVFnRXNzaVJqbXB4bWdj');
+		
 	}
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-?>
-	
+ ?>

@@ -13,7 +13,8 @@ class Drive
 		$this->client->setIncludeGrantedScopes(true);
 		//solicitar acceso 
 		$this->client->addScope('https://www.googleapis.com/auth/drive');
-		//$this->client->setAccessType('offline');
+		$this->client->addScope('https://www.googleapis.com/auth/drive.metadata');
+		$this->client->addScope('https://www.googleapis.com/auth/drive.appdata');
 		$this->client->setAuthConfigFile('client_secrets.json');		
 	}
 
@@ -40,7 +41,7 @@ class Drive
 
 	// Establecemos la pagina de redireccion luego de la autenticacion
 	public function set_redirect($arch){
-		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/dssd2016/'.$arch);
+		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/'.$arch);
 
 	}
 
@@ -157,6 +158,8 @@ class Drive
 		return $result;
 
 	}
+
+	
 }
 
 
