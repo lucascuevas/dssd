@@ -15,7 +15,7 @@ class Drive
 		$this->client->addScope('https://www.googleapis.com/auth/drive');
 		$this->client->addScope('https://www.googleapis.com/auth/drive.metadata');
 		$this->client->addScope('https://www.googleapis.com/auth/drive.appdata');
-		$this->client->setAuthConfigFile('client_secrets_local.json');
+		$this->client->setAuthConfigFile('client_secrets.json');
 	}
 
 
@@ -41,7 +41,7 @@ class Drive
 
 	// Establecemos la pagina de redireccion luego de la autenticacion
 	public function set_redirect($arch){
-		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/dssd2016/'.$arch);
+		$this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/'.$arch);
 
 	}
 

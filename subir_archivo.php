@@ -12,7 +12,7 @@ if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
 }
 else {
 
-$drive->set_redirect('/dssd2016/subir_archivo.php');
+$drive->set_redirect('/subir_archivo.php');
 
 if (! isset($_GET['code'])) {
 	$_SESSION['file_name']=$_GET['nombre'];
