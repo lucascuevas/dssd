@@ -16,7 +16,7 @@ if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
 }
 else {
 
-	$drive->set_redirect('/listado.php');
+	$drive->set_redirect('listado.php');
 
 	if ( !isset($_GET['code']) && !isset($_GET['error']) ) {
 		$drive->get_credentials($_GET['code']);
