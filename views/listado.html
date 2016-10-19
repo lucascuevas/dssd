@@ -1,5 +1,6 @@
 {% extends 'template.html' %}
 
+
 {% block contenedor %}
     <div class="row">
       <div class="demo-ribbon"></div>
@@ -41,6 +42,7 @@
                         <th></th>
                         <th data-field="name">Name</th>
                         <th data-field="id">id</th>
+                        <th> id</th>
                     </tr>
                   </thead>
                   <tbody>                   
@@ -59,8 +61,13 @@
                                {% if file.shared == 1 %}
                                <a class="waves-effect waves-light btn indigo " id="" ">Dejar de compartir</a>
                                {% endif %}
+                               <button onclick="s.showSettingsDialog()">Share</button>
+
 
                              </td>
+
+                             <td>  {{file.id}}</td>
+
                              
                             
                       </tr>
@@ -75,3 +82,4 @@
       </div>
     </div>  
 {% endblock  %}
+
