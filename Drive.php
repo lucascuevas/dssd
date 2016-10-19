@@ -15,7 +15,7 @@ class Drive
 		$this->client->addScope('https://www.googleapis.com/auth/drive');
 		$this->client->addScope('https://www.googleapis.com/auth/drive.metadata');
 		$this->client->addScope('https://www.googleapis.com/auth/drive.appdata');
-		$this->client->setAuthConfigFile('client_secrets.json');		
+		$this->client->setAuthConfigFile('client_secrets.json');
 	}
 
 
