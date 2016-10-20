@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start(); 
 require_once 'Twig.php';
 
 if (!isset($_SESSION['access_token']) {
